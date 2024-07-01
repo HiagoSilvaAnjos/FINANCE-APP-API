@@ -1,6 +1,7 @@
 import { CreateUserUseCase } from "../use-cases/create-user.js";
 import validator from "validator";
 import { badRequest, created, serverError } from "./helper.js";
+import { EmailAlreadyInUseError } from "../errors/user.js";
 
 export class CreateUserController {
     async execute(httpRequest) {
@@ -36,6 +37,11 @@ export class CreateUserController {
             return created(createdUser);
 
         } catch (error) {
+
+            if (error instanceof EmailAlreadyInUseError) {
+                return badRequest({ message: error.message });
+            }
+
             console.log(error);
             return serverError();
         }
