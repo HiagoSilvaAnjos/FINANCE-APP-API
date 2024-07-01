@@ -1,12 +1,12 @@
-import { PostgresHelper } from "../../db/postgres/helper";
+/* eslint-disable quotes */
+import { PostgresHelper } from "../../db/postgres/helper.js";
 
 export class PostgresCreateUserRepository {
     async execute(createUserParams) {
-        const result = await PostgresHelper.query(
-            // eslint-disable-next-line quotes
-            'INSERT INTO users (ID, first_name, last_name, email, password) VALUES ($1, $2, $3, $4, $5)',
+        await PostgresHelper.query(
+            'INSERT INTO users (id, first_name, last_name, email, password) VALUES ($1, $2, $3, $4, $5)',
             [
-                createUserParams.ID,
+                createUserParams.id,
                 createUserParams.first_name,
                 createUserParams.last_name,
                 createUserParams.email,
@@ -14,6 +14,13 @@ export class PostgresCreateUserRepository {
             ]
         );
 
-        return result[0];
+        const createdUser = await PostgresHelper.query(
+            'SELECT * FROM users WHERE id = $1',
+            [createUserParams.id],
+        );
+
+        console.log(createdUser[0]);
+
+        return createdUser[0];
     }
 }
