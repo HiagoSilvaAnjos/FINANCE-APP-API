@@ -1,5 +1,5 @@
 import { EmailAlreadyInUseError } from "../errors/user.js";
-import { UpdateUserUseCase } from "../use-cases/update-user.js";
+
 import {
     invalidPasswordResponse,
     invalidEmailResponse,
@@ -13,6 +13,10 @@ import {
 } from "./helpers/index.js";
 
 export class UpdateUserController {
+    constructor(updateUserUseCase) {
+        this.updateUserUseCase = updateUserUseCase;
+    }
+
     async execute(httpRequest) {
         try {
             const params = httpRequest.body;
@@ -50,9 +54,7 @@ export class UpdateUserController {
                 }
             }
 
-            const updateUserUseCase = new UpdateUserUseCase();
-
-            const updateUser = await updateUserUseCase.execute(userId, params);
+            const updateUser = await this.updateUserUseCase.execute(userId, params);
 
             console.log(updateUser);
             return ok(updateUser);
