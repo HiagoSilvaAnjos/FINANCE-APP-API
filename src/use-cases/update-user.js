@@ -13,7 +13,7 @@ export class UpdateUserUseCase {
 
             const userAlreadyExists = await getUserByEmailRepository.execute(updateUserParams.email);
 
-            if (userAlreadyExists) {
+            if (userAlreadyExists && userAlreadyExists.id !== userId) {
                 throw new EmailAlreadyInUseError(updateUserParams.email);
             }
 
