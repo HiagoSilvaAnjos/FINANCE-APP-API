@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export class CreateTransactionUseCase {
     constructor(createTransactionRepository, getUserByIdRepository) {
-        this.postgresCreateTransactionRepository = createTransactionRepository;
+        this.createTransactionRepository = createTransactionRepository;
         this.getUserByIdRepository = getUserByIdRepository;
     }
 

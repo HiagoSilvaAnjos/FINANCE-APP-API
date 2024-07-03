@@ -4,14 +4,15 @@ import {
     notFound,
     ok,
     serverError
-} from "./helpers/index.js";
+} from "../helpers/index.js";
 
-export class GetUserByIdController {
-    constructor(getUserByIdUseCase) {
+export class DeleteUserController {
+    constructor(deleteUserUseCase, getUserByIdUseCase) {
+        this.deleteUserUseCase = deleteUserUseCase;
         this.getUserByIdUseCase = getUserByIdUseCase;
     }
-
     async execute(httpRequest) {
+
         try {
 
             const isIdValid = checkIfIdIsValid(httpRequest.params.userId);
@@ -26,11 +27,14 @@ export class GetUserByIdController {
                 return notFound({ message: "User not found" });
             }
 
-            return ok(user);
+            const deleteUser = await this.deleteUserUseCase.execute(httpRequest.params.userId);
+
+            return ok(deleteUser);
 
         } catch (error) {
             console.log(error);
             return serverError();
         }
+
     }
 }
