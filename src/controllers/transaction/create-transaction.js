@@ -1,5 +1,6 @@
 import validator from "validator";
 import { badRequest, checkIfIdIsValid, created, invalidIdResponse, serverError } from "../helpers/index.js";
+import { UserNotFoundError } from "../../errors/user.js";
 
 export class CreateTransactionController {
     constructor(createTransactionUseCase) {
@@ -15,7 +16,7 @@ export class CreateTransactionController {
             const requiredFields = [
                 "user_id",
                 "name",
-                "data",
+                "date",
                 "amount",
                 "type"
             ];
@@ -60,14 +61,20 @@ export class CreateTransactionController {
                 });
             }
 
-            const transaction = this.createTransactionUseCase.execute({
+            const transaction = await this.createTransactionUseCase.execute({
                 ...params,
                 type,
             });
 
+            console.log(transaction);
             return created(transaction);
 
         } catch (error) {
+
+            if (error instanceof UserNotFoundError) {
+                return badRequest({ message: error.message });
+            }
+
             console.log(error);
             return serverError();
         }

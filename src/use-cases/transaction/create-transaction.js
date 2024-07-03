@@ -12,7 +12,7 @@ export class CreateTransactionUseCase {
 
         const userId = createTransactionParams.user_id;
 
-        const user = this.getUserByIdRepository.execute(userId);
+        const user = await this.getUserByIdRepository.execute(userId);
 
         if (!user) {
             throw new UserNotFoundError(userId);
@@ -20,7 +20,7 @@ export class CreateTransactionUseCase {
 
         const transactionId = uuidv4();
 
-        const transaction = this.createTransactionRepository.execute({
+        const transaction = await this.createTransactionRepository.execute({
             ...createTransactionParams,
             id: transactionId
         });
