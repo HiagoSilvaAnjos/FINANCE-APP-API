@@ -5,9 +5,9 @@ export class PostgresGetUserBalanceRepository {
 
         const balance = await PostgresHelper.query(`
         SELECT
-            SUM(CASE WHEN type = 'EARNING' THEN amount 0 END) ELSE AS earnings,
+            SUM(CASE WHEN type = 'EARNING' THEN amount ELSE 0 END) AS earnings,
             SUM(CASE WHEN type = 'EXPENSE' THEN amount ELSE 0 END) AS expenses,
-            SUM(CASE WHEN type = 'INVESTMENT' THEN amount ELSE 0 END) AS investiments,
+            SUM(CASE WHEN type = 'INVESTMENT' THEN amount ELSE 0 END) AS investments,
 
             (
                 SUM(CASE WHEN type = 'EARNING' THEN amount ELSE 0 END) 
