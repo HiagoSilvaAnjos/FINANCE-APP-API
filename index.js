@@ -8,7 +8,7 @@ import {
     makeUpdateUserController
 } from "./src/factories/controllers/user.js";
 
-import { makeCreateTransactionController } from "./src/factories/controllers/transaction.js";
+import { makeCreateTransactionController, makeGetTransactionByUserIdController } from "./src/factories/controllers/transaction.js";
 
 const app = express();
 
@@ -56,6 +56,14 @@ app.post("/api/transactions", async (request, response) => {
     const createTransactionController = makeCreateTransactionController();
 
     const { statusCode, body } = await createTransactionController.execute(request);
+
+    response.status(statusCode).send(body);
+});
+
+app.get("/api/transactions", async (request, response) => {
+    const getTransactionsByUserIdController = makeGetTransactionByUserIdController();
+
+    const { statusCode, body } = await getTransactionsByUserIdController.execute(request);
 
     response.status(statusCode).send(body);
 });

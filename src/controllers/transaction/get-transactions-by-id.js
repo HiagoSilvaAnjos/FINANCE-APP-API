@@ -1,4 +1,4 @@
-import { UserNotFoundError } from "../../errors/user";
+import { UserNotFoundError } from "../../errors/user.js";
 import { checkIfIdIsValid, invalidIdResponse, ok, requiredFieldsIsMissingResponse, serverError } from "../helpers/index.js";
 
 export class GetTransactionsByUserIdController {
@@ -20,7 +20,7 @@ export class GetTransactionsByUserIdController {
                 return invalidIdResponse();
             }
 
-            const transactions = await this.getTransactionsByUserIdUserCase({
+            const transactions = await this.getTransactionsByUserIdUserCase.execute({
                 userId,
             });
 
