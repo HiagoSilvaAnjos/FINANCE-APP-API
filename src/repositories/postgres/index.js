@@ -5,3 +5,4 @@ export * from "./user/delete-user.js";
 export * from "./user/get-user-by-email.js";
 
 export * from "./transaction/create-transaction.js";
+export * from "./transaction/get-transactions-by-id.js";
