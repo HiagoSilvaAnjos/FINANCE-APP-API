@@ -3,7 +3,7 @@ import { PostgresHelper } from "../../../db/postgres/helper.js";
 export class PostgresDeleteTransactionRepository {
     async execute(transitionId) {
 
-        const deleteTransaction = PostgresHelper.query(
+        const deleteTransaction = await PostgresHelper.query(
             `
             DELETE FROM transactions
             WHERE id = $1

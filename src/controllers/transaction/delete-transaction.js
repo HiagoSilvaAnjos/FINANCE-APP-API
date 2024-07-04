@@ -14,7 +14,7 @@ export class DeleteTransactionController {
                 return invalidIdResponse();
             }
 
-            const deleteTransaction = this.deleteTransactionUseCase(httpRequest.params.transactionId);
+            const deleteTransaction = await this.deleteTransactionUseCase.execute(httpRequest.params.transactionId);
 
             return ok(deleteTransaction);
         } catch (error) {
