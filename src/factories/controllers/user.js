@@ -17,7 +17,7 @@ import {
     PostgresCreateUserRepository,
     PostgresGetUserByIdRepository,
     PostgresUpdateUserRepository,
-    DeleteUserRepository,
+    PostgresDeleteUserRepository,
     PostgresGetUserByEmailRepository
 } from "../../repositories/postgres/index.js";
 
@@ -61,7 +61,7 @@ export const makeDeleteUserController = () => {
 
     const getUserByIdUseCase = new GetUserByIdUseCase(getUserByIdRepository);
 
-    const deleteUserRepository = new DeleteUserRepository();
+    const deleteUserRepository = new PostgresDeleteUserRepository();
 
     const deleteUserUseCase = new DeleteUserUseCase(deleteUserRepository);
 
