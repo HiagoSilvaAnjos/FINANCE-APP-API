@@ -5,7 +5,7 @@ import { UserNotFoundError } from "../../errors/user.js";
 describe("Get user Balance", () => {
 
     class GetUserBalanceUseCaseStub {
-        execute() {
+        async execute() {
             return faker.finance.amount();
         }
     }
@@ -57,13 +57,10 @@ describe("Get user Balance", () => {
         // arrange
         const { getUserBalanceController, getUserBalanceUseCase } = makeSut();
 
-        jest.spyOn(getUserBalanceUseCase, "execute").mockImplementationOnce(() => {
-            throw new UserNotFoundError();
-        });
+        jest.spyOn(getUserBalanceUseCase, "execute").mockRejectedValueOnce(new UserNotFoundError());
 
         // act
         const result = await getUserBalanceController.execute(httpRequest);
-
 
         // assert
         expect(result.statusCode).toBe(404);
@@ -75,9 +72,7 @@ describe("Get user Balance", () => {
         // arrange
         const { getUserBalanceController, getUserBalanceUseCase } = makeSut();
 
-        jest.spyOn(getUserBalanceUseCase, "execute").mockImplementationOnce(() => {
-            throw new Error();
-        });
+        jest.spyOn(getUserBalanceUseCase, "execute").mockRejectedValueOnce(new Error());
 
         // act
         const result = await getUserBalanceController.execute(httpRequest);

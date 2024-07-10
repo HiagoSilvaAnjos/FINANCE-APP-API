@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch --passWithNoTests",
+    "test:watch": "jest --watch --passWithNoTests --silent",
     "postinstall": "prisma generate",
     "start:dev": "nodemon index.js"
   },
