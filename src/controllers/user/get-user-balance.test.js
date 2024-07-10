@@ -38,4 +38,19 @@ describe("Get user Balance", () => {
 
     });
 
+    it("Should return statusCode 400 if userId is invalid", async () => {
+
+        // arrange
+        const { getUserBalanceController } = makeSut();
+
+        // act
+        const result = await getUserBalanceController.execute({ params: { userId: "invalid_id" } });
+
+
+        // assert
+        expect(result.statusCode).toBe(400);
+
+    });
+
+
 });
