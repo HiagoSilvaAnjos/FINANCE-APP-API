@@ -58,13 +58,27 @@ describe("Update user", () => {
 
     });
 
-    it("Should return status 400 if email is not provided", async () => {
+    it("Should return status 400 if email provided is invalid", async () => {
 
         const { updateUserController } = makeSut();
 
         const result = await updateUserController.execute({
             body: {
                 email: "invalid_email"
+            },
+            params: { ...httpRequest.params }
+        });
+
+        expect(result.statusCode).toBe(400);
+    });
+
+    it("Should return status 400 if passwor provided is invalid", async () => {
+
+        const { updateUserController } = makeSut();
+
+        const result = await updateUserController.execute({
+            body: {
+                password: faker.internet.password({ length: 5 })
             },
             params: { ...httpRequest.params }
         });
