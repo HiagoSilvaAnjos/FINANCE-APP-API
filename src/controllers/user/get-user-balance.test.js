@@ -70,4 +70,22 @@ describe("Get user Balance", () => {
 
     });
 
+    it("Should return statusCode 500 if GetUserBalanceController Throws", async () => {
+
+        // arrange
+        const { getUserBalanceController, getUserBalanceUseCase } = makeSut();
+
+        jest.spyOn(getUserBalanceUseCase, "execute").mockImplementationOnce(() => {
+            throw new Error();
+        });
+
+        // act
+        const result = await getUserBalanceController.execute(httpRequest);
+
+
+        // assert
+        expect(result.statusCode).toBe(500);
+
+    });
+
 });
