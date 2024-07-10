@@ -43,10 +43,8 @@ describe("Update user", () => {
 
     it("Should return statusCode 400 if userId is invalid", async () => {
 
-        // arrange
         const { updateUserController } = makeSut();
 
-        // act
         const result = await updateUserController.execute({
             body: {
                 ...httpRequest.body
@@ -56,10 +54,24 @@ describe("Update user", () => {
             }
         });
 
-        // assert
         expect(result.statusCode).toBe(400);
 
     });
+
+    it("Should return status 400 if email is not provided", async () => {
+
+        const { updateUserController } = makeSut();
+
+        const result = await updateUserController.execute({
+            body: {
+                email: "invalid_email"
+            },
+            params: { ...httpRequest.params }
+        });
+
+        expect(result.statusCode).toBe(400);
+    });
+
 
 
 });
