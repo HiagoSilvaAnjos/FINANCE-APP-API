@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { UpdateUserController } from "./update-user.js";
+import { EmailAlreadyInUseError } from "../../errors/user";
 
 describe("Update user", () => {
 
@@ -72,7 +73,7 @@ describe("Update user", () => {
         expect(result.statusCode).toBe(400);
     });
 
-    it("Should return status 400 if passwor provided is invalid", async () => {
+    it("Should return status 400 if password provided is invalid", async () => {
 
         const { updateUserController } = makeSut();
 
@@ -86,6 +87,31 @@ describe("Update user", () => {
         expect(result.statusCode).toBe(400);
     });
 
+    it("Should return 500 if updateUserController throws", async () => {
+
+        const { updateUserUseCase, updateUserController } = makeSut();
+
+        jest.spyOn(updateUserUseCase, "execute").mockRejectedValueOnce(new Error());
+
+        const result = await updateUserController.execute(httpRequest);
+
+        expect(result.statusCode).toBe(500);
+
+    });
+
+    it("Should return 400 if updateUserController Throws EmailAlreadyInUseError", async () => {
+
+        // arrange
+        const { updateUserUseCase, updateUserController } = makeSut();
+
+        jest.spyOn(updateUserUseCase, "execute").mockRejectedValueOnce(new EmailAlreadyInUseError());
+
+        // act
+        const result = await updateUserController.execute(httpRequest);
+
+        // assert
+        expect(result.statusCode).toBe(400);
+    });
 
 
 });
