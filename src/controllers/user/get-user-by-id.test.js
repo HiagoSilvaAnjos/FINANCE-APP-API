@@ -40,4 +40,17 @@ describe("", () => {
 
     });
 
+    it("Should return statusCode 400 if userId is invalid", async () => {
+
+        // arrange
+        const { getUserByIdController } = makeSut();
+
+        // act
+        const result = await getUserByIdController.execute({ params: { userId: "invalid_id" } });
+
+        // assert
+        expect(result.statusCode).toBe(400);
+
+    });
+
 });
