@@ -24,3 +24,8 @@ export const notFound = (body) => ({
     statusCode: 404,
     body
 });
+
+export const userNotFoundResponse = () => ({
+    statusCode: 404,
+    message: "User not found"
+});
