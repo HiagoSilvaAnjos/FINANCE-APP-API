@@ -8,7 +8,7 @@
     "test": "jest",
     "test:watch": "jest --watch --passWithNoTests",
     "postinstall": "prisma generate",
-    "start:dev": "node --watch index.js"
+    "start:dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
