@@ -59,6 +59,24 @@ describe("Update user", () => {
 
     });
 
+    it("Should return statusCode 400 when unallowed field is provided", async () => {
+
+        const { updateUserController } = makeSut();
+
+        const result = await updateUserController.execute({
+            body: {
+                ...httpRequest.body,
+                unallowed_field: "unallowed_value"
+            },
+            params: {
+                ...httpRequest.params
+            }
+        });
+
+        expect(result.statusCode).toBe(400);
+
+    });
+
     it("Should return status 400 if email provided is invalid", async () => {
 
         const { updateUserController } = makeSut();
