@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { GetUserByIdController } from "./get-user-by-id";
 
-describe("", () => {
+describe("Get user by id", () => {
     class GetUserByIdUseCaseStub {
         async execute() {
             return {
