@@ -53,7 +53,7 @@ describe("", () => {
 
     });
 
-    it("Should return 404 if user notFound", async () => {
+    it("Should return statusCode 404 if user notFound", async () => {
 
         // arrange
         const { getUserByIdController, getUserByIdUseCaseStub } = makeSut();
@@ -65,6 +65,21 @@ describe("", () => {
 
         // assert
         expect(result.statusCode).toBe(404);
+
+    });
+
+    it("Should return statusCode 500 if getUserByIdController Throws", async () => {
+
+        // arrange
+        const { getUserByIdController, getUserByIdUseCaseStub } = makeSut();
+
+        jest.spyOn(getUserByIdUseCaseStub, "execute").mockRejectedValueOnce(new Error());
+
+        // act
+        const result = await getUserByIdController.execute({ params: { userId: faker.string.uuid() } });
+
+        // assert
+        expect(result.statusCode).toBe(500);
 
     });
 
