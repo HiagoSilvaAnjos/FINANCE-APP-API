@@ -94,4 +94,21 @@ describe("Update Transaction Controller", () => {
     });
 
 
+    it("should return statusCode 400 when type provided is not EXPENSE, EARNING, INVESTMENT", async () => {
+
+        const { updateTransactionController } = makeSut();
+
+        const result = await updateTransactionController.execute({
+            body: {
+                ...httpRequest.body,
+                type: "invalid_type"
+            },
+            params: {
+                transactionId: faker.string.uuid()
+            }
+        });
+
+        expect(result.statusCode).toBe(400);
+    });
+
 });
