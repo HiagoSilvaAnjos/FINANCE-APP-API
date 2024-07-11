@@ -31,3 +31,10 @@ export const userNotFoundResponse = () => ({
         message: "User not found"
     }
 });
+
+export const transactionNotFoundResponse = () => ({
+    statusCode: 404,
+    body: {
+        message: "transaction not found"
+    }
+});
