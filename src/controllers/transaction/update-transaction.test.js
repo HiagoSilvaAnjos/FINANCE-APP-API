@@ -59,5 +59,22 @@ describe("Update Transaction Controller", () => {
 
     });
 
+    it("should return statusCode 400 when date is invalid", async () => {
+
+        const { updateTransactionController } = makeSut();
+
+        const result = await updateTransactionController.execute({
+            body: {
+                ...httpRequest.body,
+                date: "invalid_date"
+            },
+            params: {
+                transactionId: "invalid_id"
+            }
+        });
+
+        expect(result.statusCode).toBe(400);
+    });
+
 
 });
