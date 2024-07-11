@@ -73,4 +73,18 @@ describe("Get Transaction By User Id Controller", () => {
 
     });
 
+    it("Should return statusCode 400 if userId is invalid", async () => {
+
+        const { getTransactionsByUserIdController } = makeSut();
+
+        const result = await getTransactionsByUserIdController.execute({
+            query: {
+                userId: "invalid_id"
+            }
+        });
+
+        expect(result.statusCode).toBe(400);
+
+    });
+
 });
