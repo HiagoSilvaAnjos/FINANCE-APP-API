@@ -36,7 +36,7 @@ export class UpdateTransactionController {
             }
 
             console.log(error);
-            serverError();
+            return serverError();
         }
     }
 }
