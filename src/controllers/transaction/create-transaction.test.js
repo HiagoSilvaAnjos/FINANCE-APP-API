@@ -111,6 +111,20 @@ describe("Create Trasaction Controller", () => {
         expect(result.statusCode).toBe(400);
     });
 
+    it("should return statusCode 400 when date is invalid", async () => {
+
+        const { createTransactionController } = makeSut();
+
+        const result = await createTransactionController.execute({
+            body: {
+                ...httpRequest.body,
+                date: "invalid_date"
+            }
+        });
+
+        expect(result.statusCode).toBe(400);
+    });
+
     it("Should return 500 if CreateTransactionController throws", async () => {
 
         const { createTransactionUseCaseStub, createTransactionController } = makeSut();
