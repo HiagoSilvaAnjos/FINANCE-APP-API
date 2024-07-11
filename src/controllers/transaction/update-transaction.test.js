@@ -42,4 +42,22 @@ describe("Update Transaction Controller", () => {
 
     });
 
+    it("Should return statusCode 400 if transactionId provided is invalid", async () => {
+
+        const { updateTransactionController } = makeSut();
+
+        const result = await updateTransactionController.execute({
+            body: {
+                ...httpRequest.body
+            },
+            params: {
+                transactionId: "invalid_id"
+            }
+        });
+
+        expect(result.statusCode).toBe(400);
+
+    });
+
+
 });
