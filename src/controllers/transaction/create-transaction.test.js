@@ -53,5 +53,16 @@ describe("Create Trasaction Controller", () => {
 
     });
 
+    it("Should return 400 if CreateTransactionController Throws UserNotFound", async () => {
+
+        const { createTransactionUseCaseStub, createTransactionController } = makeSut();
+
+        jest.spyOn(createTransactionUseCaseStub, "execute").mockRejectedValueOnce(new UserNotFoundError());
+
+        const result = await createTransactionController.execute(httpRequest);
+
+        expect(result.statusCode).toBe(400);
+    });
+
 
 });
