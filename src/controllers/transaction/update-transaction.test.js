@@ -111,4 +111,21 @@ describe("Update Transaction Controller", () => {
         expect(result.statusCode).toBe(400);
     });
 
+    it("should return statusCode 400 when unalloweds fields is provided", async () => {
+
+        const { updateTransactionController } = makeSut();
+
+        const result = await updateTransactionController.execute({
+            body: {
+                ...httpRequest.body,
+                invalid_field: "invalid_value"
+            },
+            params: {
+                transactionId: faker.string.uuid()
+            }
+        });
+
+        expect(result.statusCode).toBe(400);
+    });
+
 });
