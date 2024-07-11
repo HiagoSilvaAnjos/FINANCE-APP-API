@@ -52,6 +52,22 @@ describe("Delete Transaction Controller", () => {
 
     });
 
+    it("Should return statusCode 404 if transactionId is notFound", async () => {
+
+        const { deleteTransactionController, deleteTransactionUseCaseStub } = makeSut();
+
+        jest.spyOn(deleteTransactionUseCaseStub, "execute").mockResolvedValue(null);
+
+        const result = await deleteTransactionController.execute({
+            params: {
+                transactionId: faker.string.uuid()
+            }
+        });
+
+        expect(result.statusCode).toBe(404);
+
+    });
+
     it("Should return 500 if DeleteTransactionController throws", async () => {
 
         const { deleteTransactionUseCaseStub, deleteTransactionController } = makeSut();
