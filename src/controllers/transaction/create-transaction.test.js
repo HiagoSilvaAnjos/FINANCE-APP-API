@@ -32,11 +32,39 @@ describe("Create Trasaction Controller", () => {
         }
     };
 
-    it("should return statusCode 201 when creating transaction successfuly", async () => {
+    it("should return statusCode 201 when creating transaction successfuly (earning)", async () => {
 
         const { createTransactionController } = makeSut();
 
         const result = await createTransactionController.execute(httpRequest);
+
+        expect(result.statusCode).toBe(201);
+    });
+
+    it("should return statusCode 201 when creating transaction successfuly (expense)", async () => {
+
+        const { createTransactionController } = makeSut();
+
+        const result = await createTransactionController.execute({
+            body: {
+                ...httpRequest.body,
+                type: "EXPENSE"
+            }
+        });
+
+        expect(result.statusCode).toBe(201);
+    });
+
+    it("should return statusCode 201 when creating transaction successfuly (investment)", async () => {
+
+        const { createTransactionController } = makeSut();
+
+        const result = await createTransactionController.execute({
+            body: {
+                ...httpRequest.body,
+                type: "INVESTMENT"
+            }
+        });
 
         expect(result.statusCode).toBe(201);
     });
