@@ -1,3 +1,4 @@
+import { UserNotFoundError } from "../../errors/user";
 import { CreateTransactionController } from "./create-transaction";
 import { faker } from "@faker-js/faker";
 
@@ -39,5 +40,18 @@ describe("Create Trasaction Controller", () => {
 
         expect(result.statusCode).toBe(201);
     });
+
+    it("Should return 500 if CreateTransactionController throws", async () => {
+
+        const { createTransactionUseCaseStub, createTransactionController } = makeSut();
+
+        jest.spyOn(createTransactionUseCaseStub, "execute").mockRejectedValueOnce(new Error());
+
+        const result = await createTransactionController.execute(httpRequest);
+
+        expect(result.statusCode).toBe(500);
+
+    });
+
 
 });
