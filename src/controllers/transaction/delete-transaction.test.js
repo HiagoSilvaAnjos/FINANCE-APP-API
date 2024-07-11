@@ -42,5 +42,15 @@ describe("Delete Transaction Controller", () => {
 
     });
 
+    it("Should return statusCode 400 if transactionId is invalid", async () => {
+
+        const { deleteTransactionController } = makeSut();
+
+        const result = await deleteTransactionController.execute({ params: { transactionId: "invalid_id" } });
+
+        expect(result.statusCode).toBe(400);
+
+    });
+
 
 });
