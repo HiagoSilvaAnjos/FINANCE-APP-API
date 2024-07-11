@@ -18,12 +18,12 @@ describe("Delete Transaction Controller", () => {
     }
 
     const makeSut = () => {
-        const deleteTransactionUseCaseStun = new DeleteTransactionUseCaseStub();
-        const deleteTransactionController = new DeleteTransactionController(deleteTransactionUseCaseStun);
+        const deleteTransactionUseCaseStub = new DeleteTransactionUseCaseStub();
+        const deleteTransactionController = new DeleteTransactionController(deleteTransactionUseCaseStub);
 
         return {
             deleteTransactionController,
-            deleteTransactionUseCaseStun
+            deleteTransactionUseCaseStub
         };
 
     };
@@ -52,5 +52,20 @@ describe("Delete Transaction Controller", () => {
 
     });
 
+    it("Should return 500 if DeleteTransactionController throws", async () => {
+
+        const { deleteTransactionUseCaseStub, deleteTransactionController } = makeSut();
+
+        jest.spyOn(deleteTransactionUseCaseStub, "execute").mockRejectedValueOnce(new Error());
+
+        const result = await deleteTransactionController.execute({
+            params: {
+                transactionId: faker.string.uuid()
+            }
+        });
+
+        expect(result.statusCode).toBe(500);
+
+    });
 
 });
