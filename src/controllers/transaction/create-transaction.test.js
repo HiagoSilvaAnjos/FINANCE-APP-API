@@ -69,6 +69,20 @@ describe("Create Trasaction Controller", () => {
         expect(result.statusCode).toBe(400);
     });
 
+    it("should return statusCode 400 when date is missing", async () => {
+
+        const { createTransactionController } = makeSut();
+
+        const result = await createTransactionController.execute({
+            body: {
+                ...httpRequest.body,
+                date: undefined
+            }
+        });
+
+        expect(result.statusCode).toBe(400);
+    });
+
     it("Should return 500 if CreateTransactionController throws", async () => {
 
         const { createTransactionUseCaseStub, createTransactionController } = makeSut();
