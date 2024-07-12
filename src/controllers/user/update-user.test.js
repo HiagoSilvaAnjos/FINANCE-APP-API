@@ -119,16 +119,24 @@ describe("Update user", () => {
 
     it("Should return 400 if updateUserController Throws EmailAlreadyInUseError", async () => {
 
-        // arrange
         const { updateUserUseCase, updateUserController } = makeSut();
 
         jest.spyOn(updateUserUseCase, "execute").mockRejectedValueOnce(new EmailAlreadyInUseError());
 
-        // act
         const result = await updateUserController.execute(httpRequest);
 
-        // assert
         expect(result.statusCode).toBe(400);
+    });
+
+    it("Should call updateUserUseCase with correct params", async () => {
+
+        const { updateUserUseCase, updateUserController } = makeSut();
+
+        const executeSpy = jest.spyOn(updateUserUseCase, "execute");
+
+        await updateUserController.execute(httpRequest);
+
+        expect(executeSpy).toHaveBeenCalledWith(httpRequest.params.userId, httpRequest.body);
     });
 
 
