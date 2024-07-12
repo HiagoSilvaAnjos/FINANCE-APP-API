@@ -84,4 +84,22 @@ describe("Delete Transaction Controller", () => {
 
     });
 
+    it("Should call DeleteTransactionController with correct params", async () => {
+
+        const { deleteTransactionUseCaseStub, deleteTransactionController } = makeSut();
+
+        const executeSpy = jest.spyOn(deleteTransactionUseCaseStub, "execute");
+
+        const transactionId = faker.string.uuid();
+
+        await deleteTransactionController.execute({
+            params: {
+                transactionId
+            }
+        });
+
+        expect(executeSpy).toHaveBeenCalledWith(transactionId);
+
+    });
+
 });
