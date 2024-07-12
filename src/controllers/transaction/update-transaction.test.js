@@ -21,7 +21,6 @@ describe("Update Transaction Controller", () => {
 
     const httpRequest = {
         body: {
-            user_id: faker.string.uuid(),
             name: faker.string.alphanumeric(10),
             date: faker.date.anytime().toISOString(),
             amount: Number(faker.finance.amount()),
