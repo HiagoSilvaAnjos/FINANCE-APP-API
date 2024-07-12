@@ -28,58 +28,58 @@ describe("Get user Balance", () => {
 
     it("Should return statusCode 200 when getUserBalanceController getting user balance", async () => {
 
-        // arrange
         const { getUserBalanceController } = makeSut();
 
-        // act
         const result = await getUserBalanceController.execute(httpRequest);
 
-        // assert
         expect(result.statusCode).toBe(200);
 
     });
 
     it("Should return statusCode 400 if userId is invalid", async () => {
 
-        // arrange
         const { getUserBalanceController } = makeSut();
 
-        // act
         const result = await getUserBalanceController.execute({ params: { userId: "invalid_id" } });
 
-        // assert
         expect(result.statusCode).toBe(400);
 
     });
 
     it("Should return statusCode 404 if GetUserBalanceControler throws is 'UserNotFoundError'", async () => {
 
-        // arrange
         const { getUserBalanceController, getUserBalanceUseCase } = makeSut();
 
         jest.spyOn(getUserBalanceUseCase, "execute").mockRejectedValueOnce(new UserNotFoundError());
 
-        // act
         const result = await getUserBalanceController.execute(httpRequest);
 
-        // assert
         expect(result.statusCode).toBe(404);
 
     });
 
     it("Should return statusCode 500 if GetUserBalanceController Throws", async () => {
 
-        // arrange
         const { getUserBalanceController, getUserBalanceUseCase } = makeSut();
 
         jest.spyOn(getUserBalanceUseCase, "execute").mockRejectedValueOnce(new Error());
 
-        // act
         const result = await getUserBalanceController.execute(httpRequest);
 
 
-        // assert
         expect(result.statusCode).toBe(500);
+
+    });
+
+    it("Should call GetUserBalanceUserUseCase with correct params", async () => {
+
+        const { getUserBalanceController, getUserBalanceUseCase } = makeSut();
+
+        const executeSpy = jest.spyOn(getUserBalanceUseCase, "execute");
+
+        await getUserBalanceController.execute(httpRequest);
+
+        expect(executeSpy).toHaveBeenCalledWith(httpRequest.params.userId);
 
     });
 
