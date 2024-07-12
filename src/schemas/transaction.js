@@ -39,6 +39,6 @@ export const createTransactionSchema = z.object({
         .enum(["EARNING", "EXPENSE", "INVESTMENT"])
 });
 
-export const updateTransactionSchema = createTransactionSchema.partial().strict({
+export const updateTransactionSchema = createTransactionSchema.omit({ user_id: true }).partial().strict({
     message: "Some fields privided not allowed"
 });
