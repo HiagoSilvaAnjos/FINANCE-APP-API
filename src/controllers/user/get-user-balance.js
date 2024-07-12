@@ -17,7 +17,7 @@ export class GetUserBalanceController {
                 return invalidIdResponse();
             }
 
-            const balance = await this.GetUserBalanceUseCase.execute({ userId });
+            const balance = await this.GetUserBalanceUseCase.execute(userId);
 
             return ok(balance);
 
