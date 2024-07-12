@@ -20,9 +20,9 @@ export class GetTransactionsByUserIdController {
                 return invalidIdResponse();
             }
 
-            const transactions = await this.getTransactionsByUserIdUserCase.execute({
-                userId,
-            });
+            const transactions = await this.getTransactionsByUserIdUserCase.execute(
+                userId
+            );
 
             return ok(transactions);
 
