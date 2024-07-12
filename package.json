@@ -7,6 +7,7 @@
   "scripts": {
     "test": "jest --passWithNoTests --silent",
     "test:watch": "jest --watch --passWithNoTests --silent",
+    "test:coverage": "jest --coverage --passWithNoTests --silent",
     "postinstall": "prisma generate",
     "start:dev": "nodemon index.js"
   },
