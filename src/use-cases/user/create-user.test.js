@@ -99,5 +99,26 @@ describe("Create User Use Case", () => {
         });
     });
 
+    it("should call passwordHasherAdapter to cryptograph password", async () => {
+
+        const { createUserUseCase, passwordHasherAdapter, postgresCreateUserRepository } = makeSut();
+        const idGeneratorSpy = jest.spyOn(
+            passwordHasherAdapter,
+            "criptograph",
+        );
+        const createUserRepositorySpy = jest.spyOn(
+            postgresCreateUserRepository,
+            "execute",
+        );
+
+        await createUserUseCase.execute(createUserParams);
+
+        expect(idGeneratorSpy).toHaveBeenCalled();
+        expect(createUserRepositorySpy).toHaveBeenCalledWith({
+            ...createUserParams,
+            password: "hashed_password",
+            id: "id_generate",
+        });
+    });
 
 });
