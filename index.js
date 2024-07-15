@@ -2,7 +2,7 @@ import "dotenv/config.js";
 import express from "express";
 
 import {
-    makeCreateUserController,
+    makeCreateUserUseCase,
     makeDeleteUserController,
     makeGetUserBalanceController,
     makeGetUserByIdController,
@@ -22,7 +22,7 @@ app.use(express.json());
 
 app.post("/api/users", async (request, response) => {
 
-    const createUserController = makeCreateUserController();
+    const createUserController = makeCreateUserUseCase();
 
     const { statusCode, body } = await createUserController.execute(request);
 
