@@ -77,4 +77,27 @@ describe("Create User Use Case", () => {
         expect(promise).rejects.toThrow(new EmailAlreadyInUseError(createUserParams.email));
     });
 
+    it("should call IdGeneratorAdapter to generate a random id", async () => {
+
+        const { createUserUseCase, idGeneratorAdapter, postgresCreateUserRepository } = makeSut();
+        const idGeneratorSpy = jest.spyOn(
+            idGeneratorAdapter,
+            "execute",
+        );
+        const createUserRepositorySpy = jest.spyOn(
+            postgresCreateUserRepository,
+            "execute",
+        );
+
+        await createUserUseCase.execute(createUserParams);
+
+        expect(idGeneratorSpy).toHaveBeenCalled();
+        expect(createUserRepositorySpy).toHaveBeenCalledWith({
+            ...createUserParams,
+            password: "hashed_password",
+            id: "id_generate",
+        });
+    });
+
+
 });
