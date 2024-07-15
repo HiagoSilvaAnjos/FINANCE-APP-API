@@ -1,11 +1,11 @@
-import { v4 as uuidv4 } from "uuid";
 import { EmailAlreadyInUseError } from "../../errors/user.js";
 
 export class CreateUserUseCase {
-    constructor(postgresCreateUserRepository, getUserByEmailRepository, passwordHasherAdapter) {
+    constructor(postgresCreateUserRepository, getUserByEmailRepository, passwordHasherAdapter, idGeneratorAdapter) {
         this.postgresCreateUserRepository = postgresCreateUserRepository;
         this.getUserByEmailRepository = getUserByEmailRepository;
         this.passwordHasherAdapter = passwordHasherAdapter;
+        this.idGeneratorAdapter = idGeneratorAdapter;
     }
 
     async execute(createUserParams) {
@@ -16,7 +16,7 @@ export class CreateUserUseCase {
             throw new EmailAlreadyInUseError(createUserParams.email);
         }
 
-        const userId = uuidv4();
+        const userId = this.idGeneratorAdapter.execute();
 
         const hashedPassword = await this.passwordHasherAdapter.criptograph(createUserParams.password);
 
