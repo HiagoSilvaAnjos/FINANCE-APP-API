@@ -24,13 +24,17 @@ import {
     PostgresGetUserBalanceRepository
 } from "../../repositories/postgres/index.js";
 
+import { PasswordHasherAdapter } from "../../adapters/index.js";
+
 export const makeCreateUserUseCase = () => {
 
     const getUserByEmailRepository = new PostgresGetUserByEmailRepository();
 
     const postgresCreateUserRepository = new PostgresCreateUserRepository();
 
-    const createUserUseCase = new CreateUserUseCase(postgresCreateUserRepository, getUserByEmailRepository);
+    const passwordHasherAdapter = new PasswordHasherAdapter();
+
+    const createUserUseCase = new CreateUserUseCase(postgresCreateUserRepository, getUserByEmailRepository, passwordHasherAdapter);
 
     const createUserController = new CreateUserController(createUserUseCase);
 
