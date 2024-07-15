@@ -121,4 +121,54 @@ describe("Create User Use Case", () => {
         });
     });
 
+    it("should throw if GetUserByEmailRepository throws", async () => {
+
+        const { createUserUseCase, getUserByEmailRepository } = makeSut();
+        jest
+            .spyOn(getUserByEmailRepository, "execute")
+            .mockRejectedValueOnce(new Error());
+
+        const promise = createUserUseCase.execute(createUserParams);
+
+        await expect(promise).rejects.toThrow();
+    });
+
+    it("should throw if IdGeneratorAdapter throws", async () => {
+
+        const { createUserUseCase, idGeneratorAdapter } = makeSut();
+        jest
+            .spyOn(idGeneratorAdapter, "execute")
+            .mockImplementationOnce(() => {
+                throw new Error();
+            });
+
+        const promise = createUserUseCase.execute(createUserParams);
+
+        await expect(promise).rejects.toThrow();
+    });
+
+    it("should throw if PasswordHasherAdapter throws", async () => {
+
+        const { createUserUseCase, passwordHasherAdapter } = makeSut();
+        jest
+            .spyOn(passwordHasherAdapter, "criptograph")
+            .mockRejectedValueOnce(new Error());
+
+        const promise = createUserUseCase.execute(createUserParams);
+
+        await expect(promise).rejects.toThrow();
+    });
+
+    it("should throw if CreateUserRepository throws", async () => {
+
+        const { createUserUseCase, postgresCreateUserRepository } = makeSut();
+        jest
+            .spyOn(postgresCreateUserRepository, "execute")
+            .mockRejectedValueOnce(new Error());
+
+        const promise = createUserUseCase.execute(createUserParams);
+
+        await expect(promise).rejects.toThrow();
+    });
+
 });
