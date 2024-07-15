@@ -41,4 +41,16 @@ describe("Delete User Use Case", () => {
 
     });
 
+    it("should call DeleteUserRepository with corrects params", async () => {
+
+        const { deleteUserUseCase, deleteUserRepository } = makeSut();
+
+        const executeSpy = jest.spyOn(deleteUserRepository, "execute");
+        const userId = faker.string.uuid();
+
+        await deleteUserUseCase.execute(userId);
+
+        expect(executeSpy).toHaveBeenCalledWith(userId);
+    });
+
 });
