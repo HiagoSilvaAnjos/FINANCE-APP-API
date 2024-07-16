@@ -80,11 +80,11 @@ describe("GetUserBalanceUseCase", () => {
 
     });
 
-    it("should call getUserBalanceUseCase with correct values", async () => {
+    it("should call getUserBalanceRepository with correct values", async () => {
 
-        const { getUserBalanceUseCase } = makeSut();
+        const { getUserBalanceUseCase, getUserBalanceRepository } = makeSut();
 
-        const executeSpy = jest.spyOn(getUserBalanceUseCase, "execute");
+        const executeSpy = jest.spyOn(getUserBalanceRepository, "execute");
 
         const userId = faker.string.uuid();
 
@@ -93,5 +93,17 @@ describe("GetUserBalanceUseCase", () => {
         expect(executeSpy).toHaveBeenCalledWith(userId);
 
     });
+
+    it("should Throws if getUserByIdRepository Throws", () => {
+
+        const { getUserBalanceUseCase, getUserByIdRepository } = makeSut();
+
+        jest.spyOn(getUserByIdRepository, "execute").mockRejectedValue(new Error());
+
+        const promise = getUserBalanceUseCase.execute(faker.string.uuid());
+
+        expect(promise).rejects.toThrow();
+    });
+
 
 });
