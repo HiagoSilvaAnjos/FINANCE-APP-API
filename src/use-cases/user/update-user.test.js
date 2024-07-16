@@ -105,4 +105,23 @@ describe("UpdateUserUseCase", () => {
 
     });
 
+    it("should call postgresUpdateUserRepository with correct params", async () => {
+
+        const { updateUserUseCase, postgresUpdateUserRepositoryStub } = makeSut();
+
+        const executeSpy = jest.spyOn(postgresUpdateUserRepositoryStub, "execute");
+
+        const updateUserParams = {
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            password: "hashed_password"
+        };
+
+        await updateUserUseCase.execute(user.id, updateUserParams);
+
+        expect(executeSpy).toHaveBeenCalledWith(user.id, updateUserParams);
+
+    });
+
 });
