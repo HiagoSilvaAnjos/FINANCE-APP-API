@@ -50,4 +50,15 @@ describe("GeyUserByIdUseCase", () => {
 
     });
 
+    it("should Throws if getUserByIdRepository Throws", () => {
+
+        const { getUserByIdUseCase, getUserByIdRepository } = makeSut();
+
+        jest.spyOn(getUserByIdRepository, "execute").mockRejectedValue(new Error());
+
+        const promise = getUserByIdUseCase.execute(user.id);
+
+        expect(promise).rejects.toThrow();
+    });
+
 });
