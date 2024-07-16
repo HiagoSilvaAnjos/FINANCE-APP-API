@@ -61,4 +61,20 @@ describe("CreateTransactionUseCase", () => {
 
     });
 
+    it("should call GetUserByIdRepository with correct params", async () => {
+
+        const { createTransactionUseCase, getUserByIdRepository } = makeSut();
+        const getUserByIdRepositorySpy = jest.spyOn(
+            getUserByIdRepository,
+            "execute",
+        );
+
+        await createTransactionUseCase.execute(createTransactionParams);
+
+        expect(getUserByIdRepositorySpy).toHaveBeenCalledWith(
+            createTransactionParams.user_id,
+        );
+    });
+
+
 });
