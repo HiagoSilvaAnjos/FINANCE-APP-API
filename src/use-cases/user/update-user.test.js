@@ -146,4 +146,20 @@ describe("UpdateUserUseCase", () => {
         expect(promise).rejects.toThrow();
     });
 
+    it("should Throws if UpdateUserRepository Throws", () => {
+
+        const { updateUserUseCase, postgresUpdateUserRepositoryStub } = makeSut();
+
+        jest.spyOn(postgresUpdateUserRepositoryStub, "execute").mockRejectedValue(new Error());
+
+        const promise = updateUserUseCase.execute(user.id, {
+            first_name: faker.person.firstName(),
+            last_name: faker.person.lastName(),
+            email: faker.internet.email(),
+            password: faker.internet.password({ length: 7 })
+        });
+
+        expect(promise).rejects.toThrow();
+    });
+
 });
