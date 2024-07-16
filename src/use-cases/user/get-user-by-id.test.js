@@ -38,16 +38,16 @@ describe("GeyUserByIdUseCase", () => {
 
     });
 
-    // it("should call getUserByIdRepository with correct params", async () => {
+    it("should call getUserByIdRepository with correct params", async () => {
 
-    //     const { getUserByIdUseCase, getUserByIdRepository } = makeSut();
+        const { getUserByIdUseCase, getUserByIdRepository } = makeSut();
 
-    //     const executeSpy = jest.spyOn(getUserByIdRepository, "execute");
+        const executeSpy = jest.spyOn(getUserByIdRepository, "execute");
 
-    //     await getUserByIdUseCase.execute(user.id);
+        await getUserByIdUseCase.execute(user.id);
 
-    //     expect(executeSpy).toHaveBeenCalledWith(user.id);
+        expect(executeSpy).toHaveBeenCalledWith(user.id);
 
-    // });
+    });
 
 });
