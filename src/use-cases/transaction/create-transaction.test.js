@@ -109,9 +109,7 @@ describe("CreateTransactionUseCase", () => {
     it("should throw UserNotFoundError if user does not exist", async () => {
 
         const { createTransactionUseCase, getUserByIdRepository } = makeSut();
-        jest
-            .spyOn(getUserByIdRepository, "execute")
-            .mockResolvedValueOnce(null);
+        jest.spyOn(getUserByIdRepository, "execute").mockResolvedValueOnce(null);
 
         const promise = createTransactionUseCase.execute(createTransactionParams);
 
@@ -123,9 +121,7 @@ describe("CreateTransactionUseCase", () => {
     it("should throw if GetUserByIdRepository throws", async () => {
 
         const { createTransactionUseCase, getUserByIdRepository } = makeSut();
-        jest
-            .spyOn(getUserByIdRepository, "execute")
-            .mockRejectedValueOnce(new Error());
+        jest.spyOn(getUserByIdRepository, "execute").mockRejectedValueOnce(new Error());
 
         const promise = createTransactionUseCase.execute(createTransactionParams);
 
@@ -135,16 +131,23 @@ describe("CreateTransactionUseCase", () => {
     it("should throw if IdGeneratorAdapter throws", async () => {
 
         const { createTransactionUseCase, idGeneratorAdapter } = makeSut();
-        jest
-            .spyOn(idGeneratorAdapter, "execute")
-            .mockImplementationOnce(() => {
-                throw new Error();
-            });
+        jest.spyOn(idGeneratorAdapter, "execute").mockImplementationOnce(() => {
+            throw new Error();
+        });
 
         const promise = createTransactionUseCase.execute(createTransactionParams);
 
         await expect(promise).rejects.toThrow();
     });
 
+    it("should throw if CreateTransactionRepository throws", async () => {
+
+        const { createTransactionUseCase, createTransactionRepository } = makeSut();
+        jest.spyOn(createTransactionRepository, "execute").mockRejectedValueOnce(new Error());
+
+        const promise = createTransactionUseCase.execute(createTransactionParams);
+
+        await expect(promise).rejects.toThrow();
+    });
 
 });
