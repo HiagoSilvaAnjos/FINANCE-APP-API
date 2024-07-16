@@ -124,4 +124,15 @@ describe("UpdateUserUseCase", () => {
 
     });
 
+    it("should Throws if getUserByIdRepository Throws", () => {
+
+        const { updateUserUseCase, getUserByEmailRepositoryStub } = makeSut();
+
+        jest.spyOn(getUserByEmailRepositoryStub, "execute").mockRejectedValue(new Error());
+
+        const promise = updateUserUseCase.execute(user.id, { email: user.email });
+
+        expect(promise).rejects.toThrow();
+    });
+
 });
