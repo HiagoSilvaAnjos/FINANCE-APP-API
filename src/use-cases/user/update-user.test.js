@@ -135,4 +135,15 @@ describe("UpdateUserUseCase", () => {
         expect(promise).rejects.toThrow();
     });
 
+    it("should Throws if passwordHasherAdapter Throws", () => {
+
+        const { updateUserUseCase, passwordHasherAdapterStub } = makeSut();
+
+        jest.spyOn(passwordHasherAdapterStub, "criptograph").mockRejectedValue(new Error());
+
+        const promise = updateUserUseCase.execute(user.id, { password: user.password });
+
+        expect(promise).rejects.toThrow();
+    });
+
 });
