@@ -72,4 +72,21 @@ describe("UpdateUserUseCase", () => {
 
     });
 
+    it("should update user successfully (with password)", async () => {
+
+        const { updateUserUseCase, passwordHasherAdapterStub } = makeSut();
+
+        const passwordHasherAdapterStubSpy = jest.spyOn(passwordHasherAdapterStub, "criptograph");
+
+        const password = faker.internet.password({ length: 7 });
+
+        const result = await updateUserUseCase.execute(faker.string.uuid(), {
+            password,
+        });
+
+        expect(passwordHasherAdapterStubSpy).toHaveBeenCalledWith(password);
+        expect(result).toBe(user);
+
+    });
+
 });
