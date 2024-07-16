@@ -55,4 +55,21 @@ describe("UpdateUserUseCase", () => {
 
     });
 
+    it("should update user successfully (with email)", async () => {
+
+        const { updateUserUseCase, getUserByEmailRepositoryStub } = makeSut();
+
+        const getUserByEmailRepositoryStubSpy = jest.spyOn(getUserByEmailRepositoryStub, "execute");
+
+        const email = faker.internet.email();
+
+        const result = await updateUserUseCase.execute(faker.string.uuid(), {
+            email,
+        });
+
+        expect(getUserByEmailRepositoryStubSpy).toHaveBeenCalledWith(email);
+        expect(result).toBe(user);
+
+    });
+
 });
