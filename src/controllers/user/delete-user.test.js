@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { DeleteUserController } from "./delete-user.js";
+import { user } from "../../tests/index.js";
 
 describe("Delete user Controller", () => {
 
@@ -7,11 +8,7 @@ describe("Delete user Controller", () => {
         async execute() {
             return {
                 body: {
-                    id: faker.string.uuid(),
-                    first_name: faker.person.firstName(),
-                    last_name: faker.person.lastName(),
-                    email: faker.internet.email(),
-                    password: faker.internet.password({ length: 7 })
+                    user
                 }
             };
         }
