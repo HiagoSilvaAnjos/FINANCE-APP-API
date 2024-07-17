@@ -1,9 +1,13 @@
-import { faker } from "@faker-js/faker";
 import { CreateUserUseCase } from "./create-user";
 import { EmailAlreadyInUseError } from "../../errors/user";
+import { user as fixtureUser } from "../../tests";
 
 describe("Create User Use Case", () => {
 
+    const user = {
+        ...fixtureUser,
+        id: undefined
+    };
     class PostgresCreateUserRepositoryStub {
         async execute(user) {
             return user;
@@ -50,18 +54,11 @@ describe("Create User Use Case", () => {
 
     };
 
-    const createUserParams = {
-        first_name: faker.person.firstName(),
-        last_name: faker.person.lastName(),
-        email: faker.internet.email(),
-        password: faker.internet.password({ length: 7 })
-    };
-
     it("Should return successfully create a user", async () => {
 
         const { createUserUseCase } = makeSut();
 
-        const createdUser = await createUserUseCase.execute(createUserParams);
+        const createdUser = await createUserUseCase.execute(user);
 
         expect(createdUser).toBeTruthy();
     });
@@ -70,11 +67,11 @@ describe("Create User Use Case", () => {
 
         const { createUserUseCase, getUserByEmailRepository } = makeSut();
 
-        jest.spyOn(getUserByEmailRepository, "execute").mockReturnValue(createUserParams);
+        jest.spyOn(getUserByEmailRepository, "execute").mockReturnValue(user);
 
-        const promise = createUserUseCase.execute(createUserParams);
+        const promise = createUserUseCase.execute(user);
 
-        expect(promise).rejects.toThrow(new EmailAlreadyInUseError(createUserParams.email));
+        expect(promise).rejects.toThrow(new EmailAlreadyInUseError(user.email));
     });
 
     it("should call IdGeneratorAdapter to generate a random id", async () => {
@@ -89,11 +86,11 @@ describe("Create User Use Case", () => {
             "execute",
         );
 
-        await createUserUseCase.execute(createUserParams);
+        await createUserUseCase.execute(user);
 
         expect(idGeneratorSpy).toHaveBeenCalled();
         expect(createUserRepositorySpy).toHaveBeenCalledWith({
-            ...createUserParams,
+            ...user,
             password: "hashed_password",
             id: "id_generate",
         });
@@ -111,11 +108,11 @@ describe("Create User Use Case", () => {
             "execute",
         );
 
-        await createUserUseCase.execute(createUserParams);
+        await createUserUseCase.execute(user);
 
         expect(idGeneratorSpy).toHaveBeenCalled();
         expect(createUserRepositorySpy).toHaveBeenCalledWith({
-            ...createUserParams,
+            ...user,
             password: "hashed_password",
             id: "id_generate",
         });
@@ -128,7 +125,7 @@ describe("Create User Use Case", () => {
             .spyOn(getUserByEmailRepository, "execute")
             .mockRejectedValueOnce(new Error());
 
-        const promise = createUserUseCase.execute(createUserParams);
+        const promise = createUserUseCase.execute(user);
 
         await expect(promise).rejects.toThrow();
     });
@@ -142,7 +139,7 @@ describe("Create User Use Case", () => {
                 throw new Error();
             });
 
-        const promise = createUserUseCase.execute(createUserParams);
+        const promise = createUserUseCase.execute(user);
 
         await expect(promise).rejects.toThrow();
     });
@@ -154,7 +151,7 @@ describe("Create User Use Case", () => {
             .spyOn(passwordHasherAdapter, "criptograph")
             .mockRejectedValueOnce(new Error());
 
-        const promise = createUserUseCase.execute(createUserParams);
+        const promise = createUserUseCase.execute(user);
 
         await expect(promise).rejects.toThrow();
     });
@@ -166,7 +163,7 @@ describe("Create User Use Case", () => {
             .spyOn(postgresCreateUserRepository, "execute")
             .mockRejectedValueOnce(new Error());
 
-        const promise = createUserUseCase.execute(createUserParams);
+        const promise = createUserUseCase.execute(user);
 
         await expect(promise).rejects.toThrow();
     });
