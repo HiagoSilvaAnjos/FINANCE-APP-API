@@ -1,10 +1,11 @@
 import { faker } from "@faker-js/faker";
 import { UpdateTransactionController } from "./update-transaction";
+import { transaction } from "../../tests";
 
 describe("Update Transaction Controller", () => {
 
     class UpdateTransactionUseCaseStub {
-        async execute(transaction) {
+        async execute() {
             return transaction;
         }
     }

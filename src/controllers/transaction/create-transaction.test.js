@@ -1,11 +1,11 @@
 import { UserNotFoundError } from "../../errors/user";
+import { transaction } from "../../tests";
 import { CreateTransactionController } from "./create-transaction";
-import { faker } from "@faker-js/faker";
 
 describe("Create Trasaction Controller", () => {
 
     class CreateTransactionUseCaseStub {
-        async execute(transaction) {
+        async execute() {
             return transaction;
         }
     }
@@ -24,11 +24,8 @@ describe("Create Trasaction Controller", () => {
 
     const httpRequest = {
         body: {
-            user_id: faker.string.uuid(),
-            name: faker.string.alphanumeric(10),
-            date: faker.date.anytime().toISOString(),
-            amount: Number(faker.finance.amount()),
-            type: "EARNING"
+            ...transaction,
+            id: undefined
         }
     };
 
