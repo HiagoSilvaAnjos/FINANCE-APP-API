@@ -1,6 +1,6 @@
 import { prisma } from "./prisma/prisma";
 
 beforeEach(async () => {
-    prisma.user.deleteMany({});
-    prisma.transaction.deleteMany({});
+    await prisma.user.deleteMany({});
+    await prisma.transaction.deleteMany({});
 });

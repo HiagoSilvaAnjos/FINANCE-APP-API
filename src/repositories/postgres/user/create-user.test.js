@@ -1,6 +1,6 @@
 import { PostgresCreateUserRepository } from "./create-user";
 import { user } from "../../../tests/index.js";
-// import { prisma } from "../../../../prisma/prisma.js";
+import { prisma } from "../../../../prisma/prisma.js";
 
 describe("CreateUserRepository", () => {
     it("should create a user on db", async () => {
@@ -15,16 +15,16 @@ describe("CreateUserRepository", () => {
         expect(result.password).toBe(user.password);
     });
 
-    // it("should call Prisma with correct params", async () => {
-    //     const postgresCreateUserRepository = new PostgresCreateUserRepository();
-    //     const prismaSpy = jest.spyOn(prisma.user, "create");
+    it("should call Prisma with correct params", async () => {
+        const postgresCreateUserRepository = new PostgresCreateUserRepository();
+        const prismaSpy = jest.spyOn(prisma.user, "create");
 
-    //     await postgresCreateUserRepository.execute(user);
+        await postgresCreateUserRepository.execute(user);
 
-    //     expect(prismaSpy).toHaveBeenCalledWith({
-    //         data: user,
-    //     });
-    // });
+        expect(prismaSpy).toHaveBeenCalledWith({
+            data: user,
+        });
+    });
 
     // it("should throw if Prisma throws", async () => {
     //     const postgresCreateUserRepository = new PostgresCreateUserRepository();
