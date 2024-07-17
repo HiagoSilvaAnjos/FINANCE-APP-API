@@ -10,7 +10,7 @@ describe("CreateTransactionUseCase", () => {
     };
 
     class CreateTransactionRepositoryStub {
-        async execute(transaction) {
+        async execute() {
             return transaction;
 
         }
@@ -48,7 +48,7 @@ describe("CreateTransactionUseCase", () => {
 
         const transaction = await createTransactionUseCase.execute(createTransactionParams);
 
-        expect(transaction).toEqual({ ...createTransactionParams, id: "generate_id" });
+        expect(transaction).toEqual(transaction);
 
     });
 

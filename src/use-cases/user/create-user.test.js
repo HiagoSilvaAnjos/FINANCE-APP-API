@@ -9,8 +9,8 @@ describe("Create User Use Case", () => {
         id: undefined
     };
     class PostgresCreateUserRepositoryStub {
-        async execute(user) {
-            return user;
+        async execute() {
+            return fixtureUser;
         }
     }
 
