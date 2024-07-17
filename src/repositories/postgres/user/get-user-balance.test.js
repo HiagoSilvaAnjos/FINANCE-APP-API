@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { prisma } from "../../../../prisma/prisma";
 import { user as fakeUser } from "../../../tests";
 import { PostgresGetUserBalanceRepository } from "./get-user-balance";
-// import { TransactionType } from "@prisma/client";
+import { TransactionType } from "@prisma/client";
 
 describe("PostgresGetUserBalanceRepository", () => {
     it("should get user balance on db", async () => {
@@ -65,44 +65,44 @@ describe("PostgresGetUserBalanceRepository", () => {
         expect(result.balance.toString()).toBe("2000");
     });
 
-    // it("should call Prisma with correct params", async () => {
-    //     const postgresGetUserBalanceRepository = new PostgresGetUserBalanceRepository();
-    //     const prismaSpy = jest.spyOn(
-    //         prisma.transaction,
-    //         "aggregate",
-    //     );
+    it("should call Prisma with correct params", async () => {
+        const postgresGetUserBalanceRepository = new PostgresGetUserBalanceRepository();
+        const prismaSpy = jest.spyOn(
+            prisma.transaction,
+            "aggregate",
+        );
 
-    //     await postgresGetUserBalanceRepository.execute(fakeUser.id);
+        await postgresGetUserBalanceRepository.execute(fakeUser.id);
 
-    //     expect(prismaSpy).toHaveBeenCalledTimes(3);
-    //     expect(prismaSpy).toHaveBeenCalledWith({
-    //         where: {
-    //             user_id: fakeUser.id,
-    //             type: TransactionType.EXPENSE,
-    //         },
-    //         _sum: {
-    //             amount: true,
-    //         },
-    //     });
-    //     expect(prismaSpy).toHaveBeenCalledWith({
-    //         where: {
-    //             user_id: fakeUser.id,
-    //             type: TransactionType.EARNING,
-    //         },
-    //         _sum: {
-    //             amount: true,
-    //         },
-    //     });
-    //     expect(prismaSpy).toHaveBeenCalledWith({
-    //         where: {
-    //             user_id: fakeUser.id,
-    //             type: TransactionType.INVESTMENT,
-    //         },
-    //         _sum: {
-    //             amount: true,
-    //         },
-    //     });
-    // });
+        expect(prismaSpy).toHaveBeenCalledTimes(3);
+        expect(prismaSpy).toHaveBeenCalledWith({
+            where: {
+                user_id: fakeUser.id,
+                type: TransactionType.EXPENSE,
+            },
+            _sum: {
+                amount: true,
+            },
+        });
+        expect(prismaSpy).toHaveBeenCalledWith({
+            where: {
+                user_id: fakeUser.id,
+                type: TransactionType.EARNING,
+            },
+            _sum: {
+                amount: true,
+            },
+        });
+        expect(prismaSpy).toHaveBeenCalledWith({
+            where: {
+                user_id: fakeUser.id,
+                type: TransactionType.INVESTMENT,
+            },
+            _sum: {
+                amount: true,
+            },
+        });
+    });
 
     // it("should throw if Prisma throws", async () => {
     //     const postgresGetUserBalanceRepository = new PostgresGetUserBalanceRepository();
