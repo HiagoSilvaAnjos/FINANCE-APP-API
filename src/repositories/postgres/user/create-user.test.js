@@ -9,7 +9,7 @@ describe("CreateUserRepository", () => {
 
         const result = await postgresCreateUserRepository.execute(user);
 
-        expect(result).not.toBeNull();
+        expect(result).toBeTruthy();
     });
 });
 
