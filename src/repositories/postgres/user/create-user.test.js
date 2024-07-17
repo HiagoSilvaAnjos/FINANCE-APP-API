@@ -26,14 +26,14 @@ describe("CreateUserRepository", () => {
         });
     });
 
-    // it("should throw if Prisma throws", async () => {
-    //     const postgresCreateUserRepository = new PostgresCreateUserRepository();
-    //     jest
-    //         .spyOn(prisma.user, "create")
-    //         .mockRejectedValueOnce(new Error());
+    it("should throw if Prisma throws", async () => {
+        const postgresCreateUserRepository = new PostgresCreateUserRepository();
+        jest
+            .spyOn(prisma.user, "create")
+            .mockRejectedValueOnce(new Error());
 
-    //     const promise = postgresCreateUserRepository.execute(user);
+        const promise = postgresCreateUserRepository.execute(user);
 
-    //     await expect(promise).rejects.toThrow();
-    // });
+        await expect(promise).rejects.toThrow();
+    });
 });
