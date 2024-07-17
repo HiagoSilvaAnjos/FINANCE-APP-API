@@ -1,11 +1,14 @@
 import { EmailAlreadyInUseError } from "../../errors/user.js";
 import { CreateUserController } from "./create-user.js";
+
+import { user } from "../../tests/index.js";
+
 import { faker } from "@faker-js/faker";
 
 describe("Create user controller", () => {
 
     class CreateUserUseCase {
-        async execute(user) {
+        async execute() {
             return user;
         }
     }
@@ -22,10 +25,8 @@ describe("Create user controller", () => {
 
     const httpRequest = {
         body: {
-            first_name: faker.person.firstName(),
-            last_name: faker.person.lastName(),
-            email: faker.internet.email(),
-            password: faker.internet.password({ length: 7 })
+            ...user,
+            id: undefined
         }
     };
 
@@ -38,7 +39,7 @@ describe("Create user controller", () => {
 
         // assert
         expect(result.statusCode).toBe(201);
-        expect(result.body).toEqual(httpRequest.body);
+        expect(result.body).toEqual(user);
 
     });
 
