@@ -1,3 +1,4 @@
+import { TransactionNotFoundError } from "../../errors/transaction.js";
 import { checkIfIdIsValid, invalidIdResponse, ok, serverError, transactionNotFoundResponse } from "../helpers/index.js";
 
 export class DeleteTransactionController {
@@ -16,12 +17,13 @@ export class DeleteTransactionController {
 
             const deleteTransaction = await this.deleteTransactionUseCase.execute(httpRequest.params.transactionId);
 
-            if (!deleteTransaction) {
+            return ok(deleteTransaction);
+        } catch (error) {
+
+            if (error instanceof TransactionNotFoundError) {
                 return transactionNotFoundResponse();
             }
 
-            return ok(deleteTransaction);
-        } catch (error) {
             console.log(error);
             return serverError();
         }
