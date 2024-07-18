@@ -39,5 +39,16 @@ describe("PostgresUpdateUserRepository", () => {
         });
     });
 
+    it("should throw if Prisma throws", async () => {
+        const postgresUpdateUserRepository = new PostgresUpdateUserRepository();
+        jest
+            .spyOn(prisma.user, "update")
+            .mockRejectedValueOnce(new Error());
+
+        const promise = postgresUpdateUserRepository.execute(updateUserParams);
+
+        await expect(promise).rejects.toThrow();
+    });
+
 
 });
