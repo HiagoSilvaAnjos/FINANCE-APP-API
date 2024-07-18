@@ -23,4 +23,21 @@ describe("PostgresUpdateUserRepository", () => {
         expect(result).toStrictEqual(updateUserParams);
     });
 
+    it("should call Prisma with correct params", async () => {
+
+        const user = await prisma.user.create({ data: fakeUser });
+        const postgresUpdateUserRepository = new PostgresUpdateUserRepository();
+        const prismaSpy = jest.spyOn(prisma.user, "update");
+
+        await postgresUpdateUserRepository.execute(user.id, updateUserParams);
+
+        expect(prismaSpy).toHaveBeenCalledWith({
+            where: {
+                id: user.id,
+            },
+            data: updateUserParams,
+        });
+    });
+
+
 });
