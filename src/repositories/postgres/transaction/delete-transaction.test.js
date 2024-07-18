@@ -2,8 +2,8 @@ import dayjs from "dayjs";
 import { prisma } from "../../../../prisma/prisma";
 import { transaction, user } from "../../../tests";
 import { PostgresDeleteTransactionRepository } from "./delete-transaction";
-// import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
-// import { TransactionNotFoundError } from '../../../errors'
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { TransactionNotFoundError } from "../../../errors/transaction";
 
 describe("PostgresDeleteTransactionRepository", () => {
     it("should delete a transaction on db", async () => {
@@ -54,6 +54,21 @@ describe("PostgresDeleteTransactionRepository", () => {
         await expect(promise).rejects.toThrow();
     });
 
+    it("should throw generic error if Prisma throws generic error", async () => {
+        const postgresDeleteTransactionRepository = new PostgresDeleteTransactionRepository();
+        jest
+            .spyOn(prisma.transaction, "delete")
+            .mockRejectedValueOnce(
+                new PrismaClientKnownRequestError("", {
+                    code: "P2025",
+                }),
+            );
 
+        const promise = postgresDeleteTransactionRepository.execute(transaction.id);
+
+        await expect(promise).rejects.toThrow(
+            new TransactionNotFoundError(transaction.id),
+        );
+    });
 
 });
