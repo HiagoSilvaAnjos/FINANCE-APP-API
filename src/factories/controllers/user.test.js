@@ -1,5 +1,5 @@
-import { CreateUserController, DeleteUserController, GetUserByIdController, UpdateUserController } from "../../controllers";
-import { makeGetUserByIdController, makeCreateUserController, makeUpdateUserController, makeDeleteUserController } from "./user";
+import { CreateUserController, DeleteUserController, GetUserBalanceController, GetUserByIdController, UpdateUserController } from "../../controllers";
+import { makeGetUserByIdController, makeCreateUserController, makeUpdateUserController, makeDeleteUserController, makeGetUserBalanceController } from "./user";
 
 describe("User Controller Factories", () => {
     it("should return a valid GetUserByIdController instance", () => {
@@ -20,6 +20,10 @@ describe("User Controller Factories", () => {
         expect(makeDeleteUserController()).toBeInstanceOf(DeleteUserController);
     });
 
-
+    it("should return a valid GetUserBalanceController instance", () => {
+        expect(makeGetUserBalanceController()).toBeInstanceOf(
+            GetUserBalanceController,
+        );
+    });
 
 });
