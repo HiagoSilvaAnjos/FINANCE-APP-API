@@ -1,9 +1,11 @@
 import {
     CreateTransactionController,
+    UpdateTransactionController,
 
 } from "../../controllers/index";
 import {
     makeCreateTransactionController,
+    makeUpdateTransactionController,
 
 } from "./transaction";
 
@@ -14,5 +16,10 @@ describe("Transaction Controller Factories", () => {
         );
     });
 
+    it("should return a valid UpdateTransactionController instance", () => {
+        expect(makeUpdateTransactionController()).toBeInstanceOf(
+            UpdateTransactionController,
+        );
+    });
 
 });
