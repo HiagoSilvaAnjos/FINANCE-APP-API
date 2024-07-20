@@ -1,16 +1,5 @@
 import "dotenv/config.js";
-import express from "express";
 
-import { usersRouter, transactionsRouter } from "./src/routes/index.js";
-
-export const app = express();
-
-app.use(express.json());
-
-// user
-app.use("/api/users", usersRouter);
-
-// Transactions
-app.use("/api/transactions", transactionsRouter);
+import { app } from "./src/app.js";
 
 app.listen(5454, () => console.log("listening on port 5454"));
