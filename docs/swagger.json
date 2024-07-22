@@ -203,6 +203,44 @@
             }
         },
         "/api/transactions": {
+            "get": {
+                "summary": "Get transactions by User ID",
+                "tags": [
+                    "Transaction"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "userId",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID of the user get transactions"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transactions found",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Transaction"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "schema": {
+                            "$ref": "#/definitions/UserNotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerError"
+                        }
+                    }
+                }
+            },
             "post": {
                 "sumary": "Create a new transaction",
                 "tags": [
@@ -229,6 +267,12 @@
                         "description": "Invalid parameters",
                         "schema": {
                             "$ref": "#/definitions/InvalidParamsResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "schema": {
+                            "$ref": "#/definitions/UserNotFoundResponse"
                         }
                     },
                     "500": {
@@ -330,7 +374,8 @@
                 },
                 "type": {
                     "type": "string",
-                    "example": "INVESTMENT"
+                    "example": "INVESTMENT",
+                    "description": "EARNING, INVESTMENT, EXPENSE"
                 },
                 "amount": {
                     "type": "number",
@@ -363,7 +408,37 @@
                 },
                 "type": {
                     "type": "string",
-                    "example": "INVESTMENT"
+                    "example": "INVESTMENT",
+                    "description": "EARNING, INVESTMENT, EXPENSE"
+                }
+            }
+        },
+        "GetTransactionsByUserId": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "1991a3ab-b10a-4e7b-aa4b-3bac836aedf3"
+                },
+                "user_id": {
+                    "type": "string",
+                    "example": "97f281c4-ba33-47db-b6cb-d6b9f61c2e0f"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Ganho"
+                },
+                "date": {
+                    "type": "string",
+                    "example": "2024-07-08T00:00:00.000Z"
+                },
+                "amount": {
+                    "type": "string",
+                    "example": "1000"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "EARNING"
                 }
             }
         },
