@@ -283,6 +283,92 @@
                     }
                 }
             }
+        },
+        "/api/transactions/{transactionId}": {
+            "patch": {
+                "summary": "Update a Transaction by ID",
+                "tags": [
+                    "Transaction"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "transactionId",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID of the transaction to update"
+                    },
+                    {
+                        "name": "body",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/UpdateTransactionParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transaction updated successfully ",
+                        "schema": {
+                            "$ref": "#/definitions/Transaction"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameters",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidParamsResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Transaction not found",
+                        "schema": {
+                            "$ref": "#/definitions/TransactionNotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a transaction",
+                "tags": [
+                    "Transaction"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "transactionId",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID of the transaction to delete"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transaction deleted successfully ",
+                        "schema": {
+                            "$ref": "#/definitions/Transaction"
+                        }
+                    },
+                    "404": {
+                        "description": "Transaction not found",
+                        "schema": {
+                            "$ref": "#/definitions/TransactionNotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerError"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -383,6 +469,28 @@
                 }
             }
         },
+        "UpdateTransactionParams": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "New name"
+                },
+                "date": {
+                    "type": "string",
+                    "example": "2024-07-08T00:00:00.000Z"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "INVESTMENT",
+                    "description": "EARNING, INVESTMENT, EXPENSE"
+                },
+                "amount": {
+                    "type": "number",
+                    "example": 2000
+                }
+            }
+        },
         "Transaction": {
             "type": "object",
             "properties": {
@@ -457,6 +565,15 @@
                 "message": {
                     "type": "string",
                     "example": "User not found"
+                }
+            }
+        },
+        "TransactionNotFoundResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Transaction not found"
                 }
             }
         },
