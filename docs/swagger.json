@@ -8,7 +8,7 @@
     "paths": {
         "/api/users": {
             "post": {
-                "sumary": "Create a new user",
+                "summary": "Create a new user",
                 "tags": [
                     "User"
                 ],
@@ -242,7 +242,7 @@
                 }
             },
             "post": {
-                "sumary": "Create a new transaction",
+                "summary": "Create a new transaction",
                 "tags": [
                     "Transaction"
                 ],
