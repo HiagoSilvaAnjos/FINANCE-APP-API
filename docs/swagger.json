@@ -201,6 +201,44 @@
                     }
                 }
             }
+        },
+        "/api/transactions": {
+            "post": {
+                "sumary": "Create a new transaction",
+                "tags": [
+                    "Transaction"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/CreateTransactionParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Transaction created successfully",
+                        "schema": {
+                            "$ref": "#/definitions/Transaction"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameters",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidParamsResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerError"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -272,6 +310,60 @@
                 "balance": {
                     "type": "string",
                     "example": "1500"
+                }
+            }
+        },
+        "CreateTransactionParams": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "Tesouro Direto"
+                },
+                "user_id": {
+                    "type": "string",
+                    "example": "97f281c4-ba33-47db-b6cb-d6b9f61c2e0f"
+                },
+                "date": {
+                    "type": "string",
+                    "example": "2024-07-08T00:00:00.000Z"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "INVESTMENT"
+                },
+                "amount": {
+                    "type": "number",
+                    "example": 1000
+                }
+            }
+        },
+        "Transaction": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "1991a3ab-b10a-4e7b-aa4b-3bac836aedf3"
+                },
+                "user_id": {
+                    "type": "string",
+                    "example": "97f281c4-ba33-47db-b6cb-d6b9f61c2e0f"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Tesouro Direto"
+                },
+                "date": {
+                    "type": "string",
+                    "example": "2024-07-08T00:00:00.000Z"
+                },
+                "amount": {
+                    "type": "string",
+                    "example": "1000"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "INVESTMENT"
                 }
             }
         },
