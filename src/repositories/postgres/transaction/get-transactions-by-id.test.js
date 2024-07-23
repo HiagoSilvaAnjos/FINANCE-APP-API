@@ -32,7 +32,7 @@ describe("PostgresGetTransactionsByUserIdRepository", () => {
 
     it("should call Prisma with correct params", async () => {
         const postgresGetTransactionsByUserIdRepository = new PostgresGetTransactionsByUserIdRepository();
-        const prismaSpy = jest.spyOn(prisma.transaction, "findMany");
+        const prismaSpy = import.meta.jest.spyOn(prisma.transaction, "findMany");
 
         await postgresGetTransactionsByUserIdRepository.execute(user.id);
 
@@ -45,9 +45,7 @@ describe("PostgresGetTransactionsByUserIdRepository", () => {
 
     it("should throw if Prisma throws", async () => {
         const postgresGetTransactionsByUserIdRepository = new PostgresGetTransactionsByUserIdRepository();
-        jest
-            .spyOn(prisma.transaction, "findMany")
-            .mockRejectedValueOnce(new Error());
+        import.meta.jest.spyOn(prisma.transaction, "findMany").mockRejectedValueOnce(new Error());
 
         const promise = postgresGetTransactionsByUserIdRepository.execute(user.id);
 

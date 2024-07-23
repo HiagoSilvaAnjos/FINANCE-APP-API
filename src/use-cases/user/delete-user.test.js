@@ -37,7 +37,7 @@ describe("Delete User Use Case", () => {
 
         const { deleteUserUseCase, deleteUserRepository } = makeSut();
 
-        const executeSpy = jest.spyOn(deleteUserRepository, "execute");
+        const executeSpy = import.meta.jest.spyOn(deleteUserRepository, "execute");
         const userId = faker.string.uuid();
 
         await deleteUserUseCase.execute(userId);
@@ -49,7 +49,7 @@ describe("Delete User Use Case", () => {
 
         const { deleteUserUseCase, deleteUserRepository } = makeSut();
 
-        jest.spyOn(deleteUserRepository, "execute").mockRejectedValue(new Error());
+        import.meta.jest.spyOn(deleteUserRepository, "execute").mockRejectedValue(new Error());
 
         const promise = deleteUserUseCase.execute(faker.string.uuid());
 

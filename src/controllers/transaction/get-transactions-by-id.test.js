@@ -72,7 +72,7 @@ describe("Get Transaction By User Id Controller", () => {
 
         const { getTransactionsByUserIdController, getTransactionsByUserIdUserCase } = makeSut();
 
-        jest.spyOn(getTransactionsByUserIdUserCase, "execute").mockRejectedValueOnce(new UserNotFoundError());
+        import.meta.jest.spyOn(getTransactionsByUserIdUserCase, "execute").mockRejectedValueOnce(new UserNotFoundError());
 
         const result = await getTransactionsByUserIdController.execute({
             query: {
@@ -88,7 +88,7 @@ describe("Get Transaction By User Id Controller", () => {
 
         const { getTransactionsByUserIdController, getTransactionsByUserIdUserCase } = makeSut();
 
-        jest.spyOn(getTransactionsByUserIdUserCase, "execute").mockRejectedValueOnce(new Error());
+        import.meta.jest.spyOn(getTransactionsByUserIdUserCase, "execute").mockRejectedValueOnce(new Error());
 
         const result = await getTransactionsByUserIdController.execute({
             query: {
@@ -104,7 +104,7 @@ describe("Get Transaction By User Id Controller", () => {
 
         const { getTransactionsByUserIdController, getTransactionsByUserIdUserCase } = makeSut();
 
-        const executeSpy = jest.spyOn(getTransactionsByUserIdUserCase, "execute");
+        const executeSpy = import.meta.jest.spyOn(getTransactionsByUserIdUserCase, "execute");
 
         const userId = faker.string.uuid();
 

@@ -34,7 +34,7 @@ describe("GeyUserByIdUseCase", () => {
 
         const { getUserByIdUseCase, getUserByIdRepository } = makeSut();
 
-        const executeSpy = jest.spyOn(getUserByIdRepository, "execute");
+        const executeSpy = import.meta.jest.spyOn(getUserByIdRepository, "execute");
 
         await getUserByIdUseCase.execute(user.id);
 
@@ -46,7 +46,7 @@ describe("GeyUserByIdUseCase", () => {
 
         const { getUserByIdUseCase, getUserByIdRepository } = makeSut();
 
-        jest.spyOn(getUserByIdRepository, "execute").mockRejectedValue(new Error());
+        import.meta.jest.spyOn(getUserByIdRepository, "execute").mockRejectedValue(new Error());
 
         const promise = getUserByIdUseCase.execute(user.id);
 

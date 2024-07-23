@@ -159,7 +159,7 @@ describe("Create user controller", () => {
         // arrange
         const { createUserUseCase, createUserController } = makeSut();
 
-        const executeSpy = jest.spyOn(createUserUseCase, "execute");
+        const executeSpy = import.meta.jest.spyOn(createUserUseCase, "execute");
 
         // act
         await createUserController.execute(httpRequest);
@@ -175,7 +175,7 @@ describe("Create user controller", () => {
         // arrange
         const { createUserUseCase, createUserController } = makeSut();
 
-        jest.spyOn(createUserUseCase, "execute").mockRejectedValueOnce(new Error());
+        import.meta.jest.spyOn(createUserUseCase, "execute").mockRejectedValueOnce(new Error());
 
         // act
         const result = await createUserController.execute(httpRequest);
@@ -191,7 +191,7 @@ describe("Create user controller", () => {
         // arrange
         const { createUserUseCase, createUserController } = makeSut();
 
-        jest.spyOn(createUserUseCase, "execute").mockRejectedValueOnce(new EmailAlreadyInUseError());
+        import.meta.jest.spyOn(createUserUseCase, "execute").mockRejectedValueOnce(new EmailAlreadyInUseError());
 
         // act
         const result = await createUserController.execute(httpRequest);

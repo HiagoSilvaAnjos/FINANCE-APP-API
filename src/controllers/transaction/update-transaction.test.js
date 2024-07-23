@@ -132,7 +132,7 @@ describe("Update Transaction Controller", () => {
 
         const { updateTransactionController, updateTransactionUseCase } = makeSut();
 
-        jest.spyOn(updateTransactionUseCase, "execute").mockRejectedValueOnce(new Error());
+        import.meta.jest.spyOn(updateTransactionUseCase, "execute").mockRejectedValueOnce(new Error());
 
         const result = await updateTransactionController.execute(httpRequest);
 
@@ -142,7 +142,7 @@ describe("Update Transaction Controller", () => {
     it("Should call CreateUserUseCase with correct params", async () => {
         const { updateTransactionUseCase, updateTransactionController } = makeSut();
 
-        const executeSpy = jest.spyOn(updateTransactionUseCase, "execute");
+        const executeSpy = import.meta.jest.spyOn(updateTransactionUseCase, "execute");
 
         await updateTransactionController.execute(httpRequest);
 

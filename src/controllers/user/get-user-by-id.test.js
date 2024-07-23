@@ -59,7 +59,7 @@ describe("Get user by id", () => {
         // arrange
         const { getUserByIdController, getUserByIdUseCaseStub } = makeSut();
 
-        jest.spyOn(getUserByIdUseCaseStub, "execute").mockResolvedValue(null);
+        import.meta.jest.spyOn(getUserByIdUseCaseStub, "execute").mockResolvedValue(null);
 
         // act
         const result = await getUserByIdController.execute(httpRequest);
@@ -74,7 +74,7 @@ describe("Get user by id", () => {
         // arrange
         const { getUserByIdController, getUserByIdUseCaseStub } = makeSut();
 
-        jest.spyOn(getUserByIdUseCaseStub, "execute").mockRejectedValueOnce(new Error());
+        import.meta.jest.spyOn(getUserByIdUseCaseStub, "execute").mockRejectedValueOnce(new Error());
 
         // act
         const result = await getUserByIdController.execute(httpRequest);
@@ -88,7 +88,7 @@ describe("Get user by id", () => {
 
         const { getUserByIdController, getUserByIdUseCaseStub } = makeSut();
 
-        const executeSpy = jest.spyOn(getUserByIdUseCaseStub, "execute");
+        const executeSpy = import.meta.jest.spyOn(getUserByIdUseCaseStub, "execute");
 
         await getUserByIdController.execute(httpRequest);
 

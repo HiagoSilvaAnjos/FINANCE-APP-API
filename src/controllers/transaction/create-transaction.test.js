@@ -182,7 +182,7 @@ describe("Create Trasaction Controller", () => {
 
         const { createTransactionUseCaseStub, createTransactionController } = makeSut();
 
-        jest.spyOn(createTransactionUseCaseStub, "execute").mockRejectedValueOnce(new Error());
+        import.meta.jest.spyOn(createTransactionUseCaseStub, "execute").mockRejectedValueOnce(new Error());
 
         const result = await createTransactionController.execute(httpRequest);
 
@@ -194,7 +194,7 @@ describe("Create Trasaction Controller", () => {
 
         const { createTransactionUseCaseStub, createTransactionController } = makeSut();
 
-        jest.spyOn(createTransactionUseCaseStub, "execute").mockRejectedValueOnce(new UserNotFoundError());
+        import.meta.jest.spyOn(createTransactionUseCaseStub, "execute").mockRejectedValueOnce(new UserNotFoundError());
 
         const result = await createTransactionController.execute(httpRequest);
 
@@ -205,7 +205,7 @@ describe("Create Trasaction Controller", () => {
 
         const { createTransactionUseCaseStub, createTransactionController } = makeSut();
 
-        const executeSpy = jest.spyOn(createTransactionUseCaseStub, "execute");
+        const executeSpy = import.meta.jest.spyOn(createTransactionUseCaseStub, "execute");
 
         await createTransactionController.execute(httpRequest);
 

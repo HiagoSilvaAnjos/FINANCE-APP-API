@@ -54,7 +54,7 @@ describe("Delete Transaction Controller", () => {
 
         const { deleteTransactionController, deleteTransactionUseCaseStub } = makeSut();
 
-        jest.spyOn(deleteTransactionUseCaseStub, "execute").mockRejectedValue(new TransactionNotFoundError());
+        import.meta.jest.spyOn(deleteTransactionUseCaseStub, "execute").mockRejectedValue(new TransactionNotFoundError());
 
         const result = await deleteTransactionController.execute({
             params: {
@@ -70,7 +70,7 @@ describe("Delete Transaction Controller", () => {
 
         const { deleteTransactionUseCaseStub, deleteTransactionController } = makeSut();
 
-        jest.spyOn(deleteTransactionUseCaseStub, "execute").mockRejectedValueOnce(new Error());
+        import.meta.jest.spyOn(deleteTransactionUseCaseStub, "execute").mockRejectedValueOnce(new Error());
 
         const result = await deleteTransactionController.execute({
             params: {
@@ -86,7 +86,7 @@ describe("Delete Transaction Controller", () => {
 
         const { deleteTransactionUseCaseStub, deleteTransactionController } = makeSut();
 
-        const executeSpy = jest.spyOn(deleteTransactionUseCaseStub, "execute");
+        const executeSpy = import.meta.jest.spyOn(deleteTransactionUseCaseStub, "execute");
 
         const transactionId = faker.string.uuid();
 

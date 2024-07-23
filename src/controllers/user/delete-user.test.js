@@ -65,7 +65,7 @@ describe("Delete user Controller", () => {
         // arrange
         const { deleteUserController, deleteUserUseCase } = makeSut();
 
-        jest.spyOn(deleteUserUseCase, "execute").mockRejectedValue(new UserNotFoundError());
+        import.meta.jest.spyOn(deleteUserUseCase, "execute").mockRejectedValue(new UserNotFoundError());
 
         // act
         const result = await deleteUserController.execute(httpRequest);
@@ -81,7 +81,7 @@ describe("Delete user Controller", () => {
         // arrange
         const { deleteUserController, deleteUserUseCase } = makeSut();
 
-        jest.spyOn(deleteUserUseCase, "execute").mockRejectedValueOnce(new Error());
+        import.meta.jest.spyOn(deleteUserUseCase, "execute").mockRejectedValueOnce(new Error());
 
         // act
         const result = await deleteUserController.execute(httpRequest);
@@ -97,7 +97,7 @@ describe("Delete user Controller", () => {
         // arrange
         const { deleteUserController, deleteUserUseCase } = makeSut();
 
-        const executeSpy = jest.spyOn(deleteUserUseCase, "execute");
+        const executeSpy = import.meta.jest.spyOn(deleteUserUseCase, "execute");
 
         // act
         await deleteUserController.execute(httpRequest);

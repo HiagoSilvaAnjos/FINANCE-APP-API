@@ -45,7 +45,7 @@ describe("GetUserBalanceUseCase", () => {
 
         const { getUserBalanceUseCase, getUserByIdRepository } = makeSut();
 
-        jest.spyOn(getUserByIdRepository, "execute").mockResolvedValue(null);
+        import.meta.jest.spyOn(getUserByIdRepository, "execute").mockResolvedValue(null);
 
         const userId = faker.string.uuid();
 
@@ -59,7 +59,7 @@ describe("GetUserBalanceUseCase", () => {
 
         const { getUserBalanceUseCase, getUserByIdRepository } = makeSut();
 
-        const executeSpy = jest.spyOn(getUserByIdRepository, "execute");
+        const executeSpy = import.meta.jest.spyOn(getUserByIdRepository, "execute");
 
         const userId = faker.string.uuid();
 
@@ -73,7 +73,7 @@ describe("GetUserBalanceUseCase", () => {
 
         const { getUserBalanceUseCase, getUserBalanceRepository } = makeSut();
 
-        const executeSpy = jest.spyOn(getUserBalanceRepository, "execute");
+        const executeSpy = import.meta.jest.spyOn(getUserBalanceRepository, "execute");
 
         const userId = faker.string.uuid();
 
@@ -87,7 +87,7 @@ describe("GetUserBalanceUseCase", () => {
 
         const { getUserBalanceUseCase, getUserByIdRepository } = makeSut();
 
-        jest.spyOn(getUserByIdRepository, "execute").mockRejectedValue(new Error());
+        import.meta.jest.spyOn(getUserByIdRepository, "execute").mockRejectedValue(new Error());
 
         const promise = getUserBalanceUseCase.execute(faker.string.uuid());
 
@@ -98,7 +98,7 @@ describe("GetUserBalanceUseCase", () => {
 
         const { getUserBalanceUseCase, getUserBalanceRepository } = makeSut();
 
-        jest.spyOn(getUserBalanceRepository, "execute").mockRejectedValue(new Error());
+        import.meta.jest.spyOn(getUserBalanceRepository, "execute").mockRejectedValue(new Error());
 
         const promise = getUserBalanceUseCase.execute(faker.string.uuid());
 
