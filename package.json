@@ -9,7 +9,9 @@
     "test:watch": "npm run test -- --watch --runInBand",
     "test:coverage": "npm run test -- --coverage ",
     "postinstall": "prisma generate",
-    "start:dev": "nodemon index.js"
+    "start:dev": "nodemon index.js",
+    "eslint:check": "eslint src --ext .js",
+    "prettier:check": "prettier --check src"
   },
   "keywords": [],
   "author": "",
