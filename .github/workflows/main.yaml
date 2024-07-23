@@ -19,9 +19,9 @@ jobs:
           node-version: "20"
 
       - name: Create .env.test file
-        run: echo "postgresql://postgres:password_finance-app-postgres@localhost:5433/finance-app" >> .env.test
+        run: echo "DATABASE_URL=postgresql://postgres:password_finance-app-postgres@localhost:5433/finance-app" > .env.test
 
-      - name: Install dependecies
+      - name: Install dependencies
         run: npm install
 
       - name: ESlint
