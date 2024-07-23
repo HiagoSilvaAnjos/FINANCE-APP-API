@@ -190,7 +190,7 @@ describe("Create Trasaction Controller", () => {
 
     });
 
-    it("Should return 400 if CreateTransactionController Throws UserNotFound", async () => {
+    it("Should return 404 if CreateTransactionController Throws UserNotFound", async () => {
 
         const { createTransactionUseCaseStub, createTransactionController } = makeSut();
 
@@ -198,7 +198,7 @@ describe("Create Trasaction Controller", () => {
 
         const result = await createTransactionController.execute(httpRequest);
 
-        expect(result.statusCode).toBe(400);
+        expect(result.statusCode).toBe(404);
     });
 
     it("Should call CreateTransactionController with correct params", async () => {
