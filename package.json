@@ -10,6 +10,7 @@
     "test:coverage": "npm run test -- --coverage ",
     "postinstall": "prisma generate",
     "start:dev": "nodemon index.js",
+    "start": "node index.js",
     "eslint:check": "eslint .",
     "prettier:check": "prettier --check src"
   },
