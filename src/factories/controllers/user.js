@@ -1,92 +1,126 @@
 import {
-    CreateUserController,
-    GetUserByIdController,
-    UpdateUserController,
-    DeleteUserController,
-    GetUserBalanceController
+  CreateUserController,
+  GetUserByIdController,
+  UpdateUserController,
+  DeleteUserController,
+  GetUserBalanceController,
+  LoginUserController,
 } from "../../controllers/index.js";
 
 import {
-    CreateUserUseCase,
-    GetUserByIdUseCase,
-    UpdateUserUseCase,
-    DeleteUserUseCase,
-    GetUserBalanceUseCase,
+  CreateUserUseCase,
+  GetUserByIdUseCase,
+  UpdateUserUseCase,
+  DeleteUserUseCase,
+  GetUserBalanceUseCase,
 } from "../../use-cases/index.js";
 
-
 import {
-    PostgresCreateUserRepository,
-    PostgresGetUserByIdRepository,
-    PostgresUpdateUserRepository,
-    PostgresDeleteUserRepository,
-    PostgresGetUserByEmailRepository,
-    PostgresGetUserBalanceRepository
+  PostgresCreateUserRepository,
+  PostgresGetUserByIdRepository,
+  PostgresUpdateUserRepository,
+  PostgresDeleteUserRepository,
+  PostgresGetUserByEmailRepository,
+  PostgresGetUserBalanceRepository,
 } from "../../repositories/postgres/index.js";
 
-import { IdGeneratorAdapter, PasswordHasherAdapter } from "../../adapters/index.js";
+import {
+  IdGeneratorAdapter,
+  PasswordComparatorAdapter,
+  PasswordHasherAdapter,
+  TokenGeneratorAdapter,
+} from "../../adapters/index.js";
+import { LoginUserUseCase } from "../../use-cases/user/login-user.js";
 
 export const makeCreateUserController = () => {
+  const getUserByEmailRepository = new PostgresGetUserByEmailRepository();
 
-    const getUserByEmailRepository = new PostgresGetUserByEmailRepository();
+  const postgresCreateUserRepository = new PostgresCreateUserRepository();
 
-    const postgresCreateUserRepository = new PostgresCreateUserRepository();
+  const passwordHasherAdapter = new PasswordHasherAdapter();
 
-    const passwordHasherAdapter = new PasswordHasherAdapter();
+  const idGeneratorAdapter = new IdGeneratorAdapter();
 
-    const idGeneratorAdapter = new IdGeneratorAdapter();
+  const createUserUseCase = new CreateUserUseCase(
+    postgresCreateUserRepository,
+    getUserByEmailRepository,
+    passwordHasherAdapter,
+    idGeneratorAdapter
+  );
 
-    const createUserUseCase = new CreateUserUseCase(postgresCreateUserRepository, getUserByEmailRepository, passwordHasherAdapter, idGeneratorAdapter);
+  const createUserController = new CreateUserController(createUserUseCase);
 
-    const createUserController = new CreateUserController(createUserUseCase);
-
-    return createUserController;
+  return createUserController;
 };
 
 export const makeGetUserByIdController = () => {
-    const getUserByIdRepository = new PostgresGetUserByIdRepository();
+  const getUserByIdRepository = new PostgresGetUserByIdRepository();
 
-    const getUserByIdUseCase = new GetUserByIdUseCase(getUserByIdRepository);
+  const getUserByIdUseCase = new GetUserByIdUseCase(getUserByIdRepository);
 
-    const getUserByIdController = new GetUserByIdController(getUserByIdUseCase);
+  const getUserByIdController = new GetUserByIdController(getUserByIdUseCase);
 
-    return getUserByIdController;
+  return getUserByIdController;
 };
 
 export const makeUpdateUserController = () => {
-    const getUserByEmailRepository = new PostgresGetUserByEmailRepository();
+  const getUserByEmailRepository = new PostgresGetUserByEmailRepository();
 
-    const postgresUpdateUserRepository = new PostgresUpdateUserRepository();
+  const postgresUpdateUserRepository = new PostgresUpdateUserRepository();
 
-    const passwordHasherAdapter = new PasswordHasherAdapter();
+  const passwordHasherAdapter = new PasswordHasherAdapter();
 
-    const updateUserUseCase = new UpdateUserUseCase(postgresUpdateUserRepository, getUserByEmailRepository, passwordHasherAdapter);
+  const updateUserUseCase = new UpdateUserUseCase(
+    postgresUpdateUserRepository,
+    getUserByEmailRepository,
+    passwordHasherAdapter
+  );
 
-    const updateUserController = new UpdateUserController(updateUserUseCase);
+  const updateUserController = new UpdateUserController(updateUserUseCase);
 
-    return updateUserController;
+  return updateUserController;
 };
 
 export const makeDeleteUserController = () => {
+  const deleteUserRepository = new PostgresDeleteUserRepository();
 
-    const deleteUserRepository = new PostgresDeleteUserRepository();
+  const deleteUserUseCase = new DeleteUserUseCase(deleteUserRepository);
 
-    const deleteUserUseCase = new DeleteUserUseCase(deleteUserRepository);
+  const deleteUserController = new DeleteUserController(deleteUserUseCase);
 
-    const deleteUserController = new DeleteUserController(deleteUserUseCase);
-
-    return deleteUserController;
+  return deleteUserController;
 };
 
 export const makeGetUserBalanceController = () => {
+  const getUserByIdRepository = new PostgresGetUserByIdRepository();
 
-    const getUserByIdRepository = new PostgresGetUserByIdRepository();
+  const getUserBalanceRepository = new PostgresGetUserBalanceRepository();
 
-    const getUserBalanceRepository = new PostgresGetUserBalanceRepository();
+  const getUserBalanceUseCase = new GetUserBalanceUseCase(
+    getUserBalanceRepository,
+    getUserByIdRepository
+  );
 
-    const getUserBalanceUseCase = new GetUserBalanceUseCase(getUserBalanceRepository, getUserByIdRepository);
+  const getUserBalanceController = new GetUserBalanceController(
+    getUserBalanceUseCase
+  );
 
-    const getUserBalanceController = new GetUserBalanceController(getUserBalanceUseCase);
+  return getUserBalanceController;
+};
 
-    return getUserBalanceController;
+export const makeLoginUserController = () => {
+  const tokensGeneratorAdapter = new TokenGeneratorAdapter();
+
+  const passwordComparatorAdapter = new PasswordComparatorAdapter();
+
+  const getUserByEmailRepository = new PostgresGetUserByEmailRepository();
+
+  const loginUserUseCase = new LoginUserUseCase(
+    getUserByEmailRepository,
+    passwordComparatorAdapter,
+    tokensGeneratorAdapter
+  );
+
+  const loginUserController = new LoginUserController(loginUserUseCase);
+  return loginUserController;
 };

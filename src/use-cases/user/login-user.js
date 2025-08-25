@@ -1,4 +1,4 @@
-import { IvalidPasswordError, UserNotFoundError } from "../../errors/user";
+import { InvalidPasswordError, UserNotFoundError } from "../../errors/user.js";
 
 export class LoginUserUseCase {
   constructor(
@@ -24,7 +24,7 @@ export class LoginUserUseCase {
       user.password
     );
     if (!isPasswordValid) {
-      throw new IvalidPasswordError();
+      throw new InvalidPasswordError();
     }
 
     // depois, gerar os tokens

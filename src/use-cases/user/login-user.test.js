@@ -1,6 +1,6 @@
 import { LoginUserUseCase } from "./login-user";
 import { user } from "../../tests/fixtures/user.js";
-import { IvalidPasswordError, UserNotFoundError } from "../../errors/user";
+import { InvalidPasswordError, UserNotFoundError } from "../../errors/user";
 
 describe("LoginUSerUseCase", () => {
   class GetUserByEmailRepositoryStub {
@@ -52,14 +52,14 @@ describe("LoginUSerUseCase", () => {
     await expect(promise).rejects.toThrow(new UserNotFoundError());
   });
 
-  it("Should throw IvalidPasswordError if password is invalid", async () => {
+  it("Should throw InvalidPasswordError if password is invalid", async () => {
     const { sut, passwordComparatorAdapterStub } = makeSut();
     import.meta.jest
       .spyOn(passwordComparatorAdapterStub, "execute")
       .mockReturnValue(false);
 
     const promise = sut.execute("any_email", "any_password");
-    await expect(promise).rejects.toThrow(new IvalidPasswordError());
+    await expect(promise).rejects.toThrow(new InvalidPasswordError());
   });
 
   it("Should return user with tokens on success", async () => {
